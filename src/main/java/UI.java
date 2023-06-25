@@ -8,14 +8,14 @@ import java.util.Objects;
 
 public class UI {
 
-    Game gm;
+    Game game;
     JFrame window;
     public JTextArea narrator;
     public JPanel[] bgPanel = new JPanel[10];
     public JLabel[] bgLabel = new JLabel[10];
 
-    public UI(Game gm) {
-        this.gm = gm;
+    public UI(Game game) {
+        this.game = game;
 
         createMainField();
         generateScene();
@@ -42,25 +42,24 @@ public class UI {
     }
 
     public void generateScene() {
-        // SCENE 1
-        createBackground(1, "paloucek.png");
-        createObject(
-                1, 200, 100, 90, 150,
-                "guard.png",
+        SceneBuilder.createBackground(window, bgPanel, bgLabel, 1, "paloucek.png");
+        SceneBuilder.createObject(
+                game, 1, bgPanel,
+                200, 100, 90, 150, "guard.png",
                 new String[]{"Talk", "Fight", "Rob"},
                 new String[]{"talkKnight", "fightKnight", "robKnight"}
         );
-        createObject(
-                1, 455, 185, 120, 50,
-                "",
+        SceneBuilder.createObject(
+                game, 1, bgPanel,
+                455, 185, 120, 50, "",
                 new String[]{"Explore"},
                 new String[]{"exploreLog"}
         );
         createArrowButton(1, 650, 150, 50, 50, "vpravo.png", "goScene2", "K jeskyni");
         createArrowButton(1, 0, 150, 50, 50, "vlevo.png", "goScene1", "Utéct domů");
 
-        // SCENE 2
-        createBackground(2, "jeskyne.png");
+//         SCENE 2
+        SceneBuilder.createBackground(window, bgPanel, bgLabel, 2, "jeskyne.png");
         createObject(
                 2, 400, 200, 90, 150,
                 "kneel.png",
@@ -79,20 +78,6 @@ public class UI {
         bgPanel[2].add(bgLabel[2]);
     }
 
-    public void createBackground(int bgNum, String bgFileName) {
-        bgPanel[bgNum] = new JPanel();
-        bgPanel[bgNum].setBounds(50, 50, 700, 350);
-        bgPanel[bgNum].setBackground(Color.BLACK);
-        bgPanel[bgNum].setLayout(null);
-        window.add(bgPanel[bgNum]);
-
-        bgLabel[bgNum] = new JLabel();
-        bgLabel[bgNum].setBounds(0, 0, 700, 350);
-
-        var bgIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(bgFileName)));
-        bgLabel[bgNum].setIcon(bgIcon);
-    }
-
     public void createArrowButton(
             int bgNum, int x, int y, int width, int height,
             String fileName, String command, String tooltip
@@ -108,7 +93,7 @@ public class UI {
         arrowBtn.setFocusPainted(false);
 
         arrowBtn.setIcon(arrowIcon);
-        arrowBtn.addActionListener(gm.actionHandler);
+        arrowBtn.addActionListener(game.actionHandler);
         arrowBtn.setActionCommand(command);
 
         ToolTipManager.sharedInstance().setInitialDelay(0);
@@ -171,7 +156,7 @@ public class UI {
         var i = 0;
         for (String item : menuChoice) {
             menuItem[i] = new JMenuItem(item);
-            menuItem[i].addActionListener(gm.actionHandler);
+            menuItem[i].addActionListener(game.actionHandler);
             menuItem[i].setActionCommand(commands[i]);
             popMenu.add(menuItem[i]);
             i++;

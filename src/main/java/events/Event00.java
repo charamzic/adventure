@@ -2,11 +2,11 @@ package main.java.events;
 
 import main.java.Game;
 
-public class Event01 {
+public class Event00 {
 
     Game game;
 
-    public Event01(Game game) {
+    public Event00(Game game) {
         this.game = game;
     }
 

@@ -16,6 +16,7 @@ public class ActionHandler implements ActionListener {
         var choice = e.getActionCommand();
 
         switch (choice) {
+            // scene00
             case "talkKnight" -> game.event01.talkKnight();
             case "fightKnight" -> game.event01.fightKnight();
             case "robKnight" -> game.event01.robKnight();
