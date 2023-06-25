@@ -2,7 +2,9 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Objects;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,8 +19,8 @@ public class UI {
     Game gm;
     JFrame window;
     public JTextArea narrator;
-    public JPanel bgPanel[] = new JPanel[10];
-    public JLabel bgLabel[] = new JLabel[10];
+    public JPanel[] bgPanel = new JPanel[10];
+    public JLabel[] bgLabel = new JLabel[10];
 
     public UI(Game gm) {
         this.gm = gm;
@@ -57,7 +59,7 @@ public class UI {
         bgLabel[bgNum] = new JLabel();
         bgLabel[bgNum].setBounds(0, 0, 700, 350);
 
-        ImageIcon bgIcon = new ImageIcon(getClass().getClassLoader().getResource(bgFileName));
+        ImageIcon bgIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(bgFileName)));
         bgLabel[bgNum].setIcon(bgIcon);
 
     }
@@ -67,7 +69,7 @@ public class UI {
             String objFileName, String menuChoice0, String menuChoice1, String menuChoice2) {
 
         JPopupMenu popMenu = new JPopupMenu();
-        JMenuItem menuItem[] = new JMenuItem[3];
+        JMenuItem[] menuItem = new JMenuItem[3];
 
         menuItem[0] = new JMenuItem(menuChoice0);
         popMenu.add(menuItem[0]);
@@ -81,11 +83,35 @@ public class UI {
         JLabel objectLabel = new JLabel();
         objectLabel.setBounds(objX, objY, objWidth, objHeight);
 
-        ImageIcon objectIcon = new ImageIcon(getClass().getClassLoader().getResource(objFileName));
+        ImageIcon objectIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(objFileName)));
         objectLabel.setIcon(objectIcon);
 
         objectLabel.addMouseListener(new MouseListener() {
-        	
+
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(final MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(final MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(final MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(final MouseEvent e) {
+
+            }
         });
 
         bgPanel[bgNum].add(objectLabel);
