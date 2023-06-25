@@ -2,11 +2,14 @@ package Main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 
 public class UI {
@@ -21,8 +24,7 @@ public class UI {
         this.gm = gm;
 
         createMainField();
-        createBackground();
-        createObject(300, 150, 90, 150, "guard.png");
+        generateScreen();
 
         window.setVisible(true);
     }
@@ -45,30 +47,53 @@ public class UI {
         window.add(narrator);
     }
 
-    public void createBackground() {
-        bgPanel[1] = new JPanel();
-        bgPanel[1].setBounds(50, 50, 700, 350);
-        bgPanel[1].setBackground(null);
-        bgPanel[1].setLayout(null);
-        window.add(bgPanel[1]);
+    public void createBackground(int bgNum, String bgFileName) {
+        bgPanel[bgNum] = new JPanel();
+        bgPanel[bgNum].setBounds(50, 50, 700, 350);
+        bgPanel[bgNum].setBackground(null);
+        bgPanel[bgNum].setLayout(null);
+        window.add(bgPanel[bgNum]);
 
-        bgLabel[1] = new JLabel();
-        bgLabel[1].setBounds(0, 0, 700, 350);
+        bgLabel[bgNum] = new JLabel();
+        bgLabel[bgNum].setBounds(0, 0, 700, 350);
 
-        ImageIcon bgIcon = new ImageIcon(getClass().getClassLoader().getResource("paloucek.png"));
-        bgLabel[1].setIcon(bgIcon);
+        ImageIcon bgIcon = new ImageIcon(getClass().getClassLoader().getResource(bgFileName));
+        bgLabel[bgNum].setIcon(bgIcon);
 
     }
 
-    public void createObject(int objX, int objY, int objWidth, int objHeight, String objFileName) {
+    public void createObject(
+            int bgNum, int objX, int objY, int objWidth, int objHeight,
+            String objFileName, String menuChoice0, String menuChoice1, String menuChoice2) {
+
+        JPopupMenu popMenu = new JPopupMenu();
+        JMenuItem menuItem[] = new JMenuItem[3];
+
+        menuItem[0] = new JMenuItem(menuChoice0);
+        popMenu.add(menuItem[0]);
+
+        menuItem[1] = new JMenuItem(menuChoice1);
+        popMenu.add(menuItem[1]);
+
+        menuItem[2] = new JMenuItem(menuChoice2);
+        popMenu.add(menuItem[2]);
+
         JLabel objectLabel = new JLabel();
         objectLabel.setBounds(objX, objY, objWidth, objHeight);
 
         ImageIcon objectIcon = new ImageIcon(getClass().getClassLoader().getResource(objFileName));
-
         objectLabel.setIcon(objectIcon);
 
-        bgPanel[1].add(objectLabel);
-        bgPanel[1].add(bgLabel[1]);
+        objectLabel.addMouseListener(new MouseListener() {
+        	
+        });
+
+        bgPanel[bgNum].add(objectLabel);
+        bgPanel[bgNum].add(bgLabel[bgNum]);
+    }
+
+    public void generateScreen() {
+        createBackground(1, "paloucek.png");
+        createObject(1, 340, 140, 200, 200, "guard.png", "Talk", "Fight", "Yield");
     }
 }
