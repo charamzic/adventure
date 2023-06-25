@@ -30,7 +30,7 @@ public class UI {
         window.getContentPane().setBackground(Color.BLACK);
         window.setLayout(null);
 
-        narrator = new JTextArea("Come on, by the order of the Peaky Blinders and the King, we need to move on!");
+        narrator = new JTextArea();
         narrator.setBounds(50, 410, 700, 150);
         narrator.setBackground(Color.BLACK);
         narrator.setForeground(Color.WHITE);
@@ -66,6 +66,12 @@ public class UI {
                 "kneel.png",
                 new String[]{"Talk"},
                 new String[]{"talkKneelingKnight"}
+        );
+        createObject(
+                2, 320, 220, 40, 40,
+                "",
+                new String[]{"Explore"},
+                new String[]{"exploreCave"}
         );
         createArrowButton(2, 0, 150, 50, 50, "vlevo.png", "goScene0", "Zpět na začátek");
 
@@ -104,7 +110,6 @@ public class UI {
         arrowBtn.setIcon(arrowIcon);
         arrowBtn.addActionListener(gm.actionHandler);
         arrowBtn.setActionCommand(command);
-        arrowBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         ToolTipManager.sharedInstance().setInitialDelay(0);
         ToolTipManager.sharedInstance().setReshowDelay(0);

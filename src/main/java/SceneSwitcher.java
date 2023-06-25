@@ -11,6 +11,7 @@ public class SceneSwitcher {
     public void showScene00() {
         game.ui.bgPanel[1].setVisible(true);
         game.ui.bgPanel[2].setVisible(false);
+        game.ui.narrator.setText("Come on, by the order of the Peaky Blinders and the King, we need to move on!");
     }
 
     public void showScene01() {

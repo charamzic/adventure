@@ -22,6 +22,7 @@ public class ActionHandler implements ActionListener {
             case "exploreLog" -> game.event01.exploreLog();
             // scene02
             case "talkKneelingKnight" -> game.event02.talkKneelingKnight();
+            case "exploreCave" -> game.event02.exploreCave();
             // scenes
             case "goScene1" -> game.sceneSwitcher.showScene01();
             case "goScene2" -> game.sceneSwitcher.showScene02();
