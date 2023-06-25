@@ -18,7 +18,7 @@ public class UI {
         this.gm = gm;
 
         createMainField();
-        generateScreen();
+        generateScene();
 
         window.setVisible(true);
     }
@@ -41,10 +41,42 @@ public class UI {
         window.add(narrator);
     }
 
+    public void generateScene() {
+        // SCENE 1
+        createBackground(1, "paloucek.png");
+        createObject(
+                1, 200, 100, 90, 150,
+                "guard.png",
+                new String[]{"Talk", "Fight", "Rob"},
+                new String[]{"talkKnight", "fightKnight", "robKnight"}
+        );
+        createObject(
+                1, 455, 185, 120, 50,
+                "",
+                new String[]{"Explore"},
+                new String[]{"exploreLog"}
+        );
+        createArrowButton(1, 650, 150, 50, 50, "vpravo.png", "goScene2", "K jeskyni");
+        createArrowButton(1, 0, 150, 50, 50, "vlevo.png", "goScene1", "Utéct domů");
+
+        // SCENE 2
+        createBackground(2, "jeskyne.png");
+        createObject(
+                2, 400, 200, 90, 150,
+                "kneel.png",
+                new String[]{"Talk"},
+                new String[]{"talkKneelingKnight"}
+        );
+        createArrowButton(2, 0, 150, 50, 50, "vlevo.png", "goScene0", "Zpět na začátek");
+
+        bgPanel[1].add(bgLabel[1]);
+        bgPanel[2].add(bgLabel[2]);
+    }
+
     public void createBackground(int bgNum, String bgFileName) {
         bgPanel[bgNum] = new JPanel();
         bgPanel[bgNum].setBounds(50, 50, 700, 350);
-        bgPanel[bgNum].setBackground(null);
+        bgPanel[bgNum].setBackground(Color.BLACK);
         bgPanel[bgNum].setLayout(null);
         window.add(bgPanel[bgNum]);
 
@@ -53,6 +85,32 @@ public class UI {
 
         var bgIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(bgFileName)));
         bgLabel[bgNum].setIcon(bgIcon);
+    }
+
+    public void createArrowButton(
+            int bgNum, int x, int y, int width, int height,
+            String fileName, String command, String tooltip
+    ) {
+        ImageIcon arrowIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(fileName)));
+
+        JButton arrowBtn = new JButton();
+
+        arrowBtn.setBounds(x, y, width, height);
+        arrowBtn.setOpaque(false);
+        arrowBtn.setContentAreaFilled(false);
+        arrowBtn.setBorderPainted(false);
+        arrowBtn.setFocusPainted(false);
+
+        arrowBtn.setIcon(arrowIcon);
+        arrowBtn.addActionListener(gm.actionHandler);
+        arrowBtn.setActionCommand(command);
+        arrowBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        ToolTipManager.sharedInstance().setInitialDelay(0);
+        ToolTipManager.sharedInstance().setReshowDelay(0);
+        arrowBtn.setToolTipText(tooltip);
+
+        bgPanel[bgNum].add(arrowBtn);
     }
 
     public void createObject(
@@ -99,7 +157,6 @@ public class UI {
         });
 
         bgPanel[bgNum].add(objectLabel);
-        bgPanel[bgNum].add(bgLabel[bgNum]);
     }
 
     private JPopupMenu constructPopupMenu(String[] menuChoice, String[] commands) {
@@ -115,21 +172,5 @@ public class UI {
             i++;
         }
         return popMenu;
-    }
-
-    public void generateScreen() {
-        createBackground(1, "paloucek.png");
-        createObject(
-                1, 200, 100, 90, 150,
-                "guard.png",
-                new String[]{"Talk", "Fight", "Rob"},
-                new String[]{"talkKnight", "fightKnight", "robKnight"}
-        );
-        createObject(
-                1, 455, 185, 120, 50,
-                "",
-                new String[]{"Explore"},
-                new String[]{"exploreLog"}
-        );
     }
 }

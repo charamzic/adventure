@@ -16,10 +16,16 @@ public class ActionHandler implements ActionListener {
         var choice = e.getActionCommand();
 
         switch (choice) {
-            case "talkKnight" -> game.knight01.talkKnight();
-            case "fightKnight" -> game.knight01.fightKnight();
-            case "robKnight" -> game.knight01.robKnight();
-            case "exploreLog" -> game.ui.narrator.setText("You got yourself a stick. Better than nothing. Now, hurry up, be on your way!");
+            case "talkKnight" -> game.event01.talkKnight();
+            case "fightKnight" -> game.event01.fightKnight();
+            case "robKnight" -> game.event01.robKnight();
+            case "exploreLog" -> game.event01.exploreLog();
+            // scene02
+            case "talkKneelingKnight" -> game.event02.talkKneelingKnight();
+            // scenes
+            case "goScene1" -> game.sceneSwitcher.showScene01();
+            case "goScene2" -> game.sceneSwitcher.showScene02();
+            case "goScene0" -> game.sceneSwitcher.showScene00();
             default -> {
                 game.ui.narrator.setText("Nothing for you here, be on your way!");
                 throw new IllegalStateException("Unexpected value: " + choice);

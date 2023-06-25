@@ -2,11 +2,11 @@ package main.java.events;
 
 import main.java.Game;
 
-public class Knight01 {
+public class Event01 {
 
     Game game;
 
-    public Knight01(Game game) {
+    public Event01(Game game) {
         this.game = game;
     }
 
@@ -20,5 +20,9 @@ public class Knight01 {
 
     public void robKnight() {
         game.ui.narrator.setText("This is not chivalrous behavior! You want to get whipped?");
+    }
+
+    public void exploreLog() {
+        game.ui.narrator.setText("You got yourself a club. Better than nothing. Now, hurry up, be on your way!");
     }
 }
