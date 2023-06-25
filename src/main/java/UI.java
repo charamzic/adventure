@@ -1,4 +1,4 @@
-package Main.java;
+package main.java;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class UI {
         window.getContentPane().setBackground(Color.BLACK);
         window.setLayout(null);
 
-        narrator = new JTextArea("Tak tohle bude nejprisnejsi klikacka efffer");
+        narrator = new JTextArea("Come on, by the order of the Peaky Blinders and the King, we need to move on!");
         narrator.setBounds(50, 410, 700, 150);
         narrator.setBackground(Color.BLACK);
         narrator.setForeground(Color.WHITE);
@@ -77,7 +77,7 @@ public class UI {
 
             @Override
             public void mousePressed(final MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e)) {
+                if (SwingUtilities.isLeftMouseButton(e)) {
                     popMenu.show(objectLabel, e.getX(), e.getY());
                 }
             }
