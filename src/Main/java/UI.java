@@ -57,9 +57,9 @@ public class UI {
 
     public void createObject(
             int bgNum, int objX, int objY, int objWidth, int objHeight,
-            String objFileName, String... menuChoice) {
+            String objFileName, String[] menuChoices, String[] actions) {
 
-        var popMenu = constructPopupMenu(menuChoice);
+        var popMenu = constructPopupMenu(menuChoices, actions);
 
         var objectLabel = new JLabel();
         objectLabel.setBounds(objX, objY, objWidth, objHeight);
@@ -102,13 +102,15 @@ public class UI {
         bgPanel[bgNum].add(bgLabel[bgNum]);
     }
 
-    private JPopupMenu constructPopupMenu(String[] menuChoice) {
+    private JPopupMenu constructPopupMenu(String[] menuChoice, String[] commands) {
         var popMenu = new JPopupMenu();
         var menuItem = new JMenuItem[menuChoice.length];
 
         var i = 0;
         for (String item : menuChoice) {
             menuItem[i] = new JMenuItem(item);
+            menuItem[i].addActionListener(gm.actionHandler);
+            menuItem[i].setActionCommand(commands[i]);
             popMenu.add(menuItem[i]);
             i++;
         }
@@ -119,11 +121,15 @@ public class UI {
         createBackground(1, "paloucek.png");
         createObject(
                 1, 200, 100, 90, 150,
-                "guard.png", "Talk", "Fight", "Yield"
+                "guard.png",
+                new String[]{"Talk", "Fight", "Rob"},
+                new String[]{"talkKnight", "fightKnight", "robKnight"}
         );
         createObject(
                 1, 455, 185, 120, 50,
-                "", "Explore"
+                "",
+                new String[]{"Explore"},
+                new String[]{"exploreLog"}
         );
     }
 }
