@@ -61,7 +61,6 @@ public class UI {
 
         ImageIcon bgIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(bgFileName)));
         bgLabel[bgNum].setIcon(bgIcon);
-
     }
 
     public void createObject(
