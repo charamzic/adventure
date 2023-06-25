@@ -1,18 +1,10 @@
-package Main;
+package Main.java;
 
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Objects;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextArea;
 
 public class UI {
 
@@ -59,30 +51,21 @@ public class UI {
         bgLabel[bgNum] = new JLabel();
         bgLabel[bgNum].setBounds(0, 0, 700, 350);
 
-        ImageIcon bgIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(bgFileName)));
+        var bgIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(bgFileName)));
         bgLabel[bgNum].setIcon(bgIcon);
     }
 
     public void createObject(
             int bgNum, int objX, int objY, int objWidth, int objHeight,
-            String objFileName, String menuChoice0, String menuChoice1, String menuChoice2) {
+            String objFileName, String... menuChoice) {
 
-        JPopupMenu popMenu = new JPopupMenu();
-        JMenuItem[] menuItem = new JMenuItem[3];
+        var popMenu = constructPopupMenu(menuChoice);
 
-        menuItem[0] = new JMenuItem(menuChoice0);
-        popMenu.add(menuItem[0]);
-
-        menuItem[1] = new JMenuItem(menuChoice1);
-        popMenu.add(menuItem[1]);
-
-        menuItem[2] = new JMenuItem(menuChoice2);
-        popMenu.add(menuItem[2]);
-
-        JLabel objectLabel = new JLabel();
+        var objectLabel = new JLabel();
         objectLabel.setBounds(objX, objY, objWidth, objHeight);
+        objectLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        ImageIcon objectIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(objFileName)));
+        var objectIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(objFileName)));
         objectLabel.setIcon(objectIcon);
 
         objectLabel.addMouseListener(new MouseListener() {
@@ -94,7 +77,9 @@ public class UI {
 
             @Override
             public void mousePressed(final MouseEvent e) {
-
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    popMenu.show(objectLabel, e.getX(), e.getY());
+                }
             }
 
             @Override
@@ -117,8 +102,28 @@ public class UI {
         bgPanel[bgNum].add(bgLabel[bgNum]);
     }
 
+    private JPopupMenu constructPopupMenu(String[] menuChoice) {
+        var popMenu = new JPopupMenu();
+        var menuItem = new JMenuItem[menuChoice.length];
+
+        var i = 0;
+        for (String item : menuChoice) {
+            menuItem[i] = new JMenuItem(item);
+            popMenu.add(menuItem[i]);
+            i++;
+        }
+        return popMenu;
+    }
+
     public void generateScreen() {
         createBackground(1, "paloucek.png");
-        createObject(1, 340, 140, 200, 200, "guard.png", "Talk", "Fight", "Yield");
+        createObject(
+                1, 200, 100, 90, 150,
+                "guard.png", "Talk", "Fight", "Yield"
+        );
+        createObject(
+                1, 455, 185, 120, 50,
+                "", "Explore"
+        );
     }
 }

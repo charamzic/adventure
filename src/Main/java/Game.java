@@ -1,6 +1,4 @@
-package Main;
-
-import Main.UI;
+package Main.java;
 
 public class Game {
 
