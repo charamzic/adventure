@@ -2,8 +2,6 @@ package main.java;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Objects;
 
 public class UI {
@@ -42,6 +40,7 @@ public class UI {
     }
 
     public void generateScene() {
+        // SCENE 00
         SceneBuilder.createBackground(window, bgPanel, bgLabel, 1, "paloucek.png");
         SceneBuilder.createObject(
                 game, 1, bgPanel,
@@ -55,38 +54,38 @@ public class UI {
                 new String[]{"Explore"},
                 new String[]{"exploreLog"}
         );
-        createArrowButton(1, 650, 150, 50, 50, "vpravo.png", "goScene2", "K jeskyni");
-        createArrowButton(1, 0, 150, 50, 50, "vlevo.png", "goScene1", "Utéct domů");
+        createArrowButton(1, 650, 150, "vpravo.png", "goScene2", "K jeskyni");
+        createArrowButton(1, 0, 150, "vlevo.png", "goScene1", "Utéct domů");
 
-//         SCENE 2
+        // SCENE 02
         SceneBuilder.createBackground(window, bgPanel, bgLabel, 2, "jeskyne.png");
-        createObject(
-                2, 400, 200, 90, 150,
-                "kneel.png",
+        SceneBuilder.createObject(
+                game, 2, bgPanel,
+                400, 200, 90, 150, "kneel.png",
                 new String[]{"Talk"},
                 new String[]{"talkKneelingKnight"}
         );
-        createObject(
-                2, 320, 220, 40, 40,
-                "",
+        SceneBuilder.createObject(
+                game, 2, bgPanel,
+                320, 220, 40, 40, "",
                 new String[]{"Explore"},
                 new String[]{"exploreCave"}
         );
-        createArrowButton(2, 0, 150, 50, 50, "vlevo.png", "goScene0", "Zpět na začátek");
+        createArrowButton(2, 0, 150, "vlevo.png", "goScene0", "Zpět na začátek");
 
         bgPanel[1].add(bgLabel[1]);
         bgPanel[2].add(bgLabel[2]);
     }
 
-    public void createArrowButton(
-            int bgNum, int x, int y, int width, int height,
+    private void createArrowButton(
+            int bgNum, int posX, int posY,
             String fileName, String command, String tooltip
     ) {
         ImageIcon arrowIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(fileName)));
 
         JButton arrowBtn = new JButton();
 
-        arrowBtn.setBounds(x, y, width, height);
+        arrowBtn.setBounds(posX, posY, 50, 50);
         arrowBtn.setOpaque(false);
         arrowBtn.setContentAreaFilled(false);
         arrowBtn.setBorderPainted(false);
@@ -101,66 +100,5 @@ public class UI {
         arrowBtn.setToolTipText(tooltip);
 
         bgPanel[bgNum].add(arrowBtn);
-    }
-
-    public void createObject(
-            int bgNum, int objX, int objY, int objWidth, int objHeight,
-            String objFileName, String[] menuChoices, String[] actions) {
-
-        var popMenu = constructPopupMenu(menuChoices, actions);
-
-        var objectLabel = new JLabel();
-        objectLabel.setBounds(objX, objY, objWidth, objHeight);
-        objectLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        var objectIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(objFileName)));
-        objectLabel.setIcon(objectIcon);
-
-        objectLabel.addMouseListener(new MouseListener() {
-
-            @Override
-            public void mouseClicked(final MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(final MouseEvent e) {
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    popMenu.show(objectLabel, e.getX(), e.getY());
-                }
-            }
-
-            @Override
-            public void mouseReleased(final MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(final MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(final MouseEvent e) {
-
-            }
-        });
-
-        bgPanel[bgNum].add(objectLabel);
-    }
-
-    private JPopupMenu constructPopupMenu(String[] menuChoice, String[] commands) {
-        var popMenu = new JPopupMenu();
-        var menuItem = new JMenuItem[menuChoice.length];
-
-        var i = 0;
-        for (String item : menuChoice) {
-            menuItem[i] = new JMenuItem(item);
-            menuItem[i].addActionListener(game.actionHandler);
-            menuItem[i].setActionCommand(commands[i]);
-            popMenu.add(menuItem[i]);
-            i++;
-        }
-        return popMenu;
     }
 }
