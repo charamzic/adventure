@@ -7,6 +7,7 @@ public class Game {
 
     ActionHandler actionHandler = new ActionHandler(this);
     public UI ui = new UI(this);
+    public Player player = new Player(this);
 
     public SceneSwitcher sceneSwitcher = new SceneSwitcher(this);
     public Event00 event01 = new Event00(this);
@@ -17,6 +18,7 @@ public class Game {
     }
 
     public Game() {
+        player.setDefaultValues();
         sceneSwitcher.showScene00();
     }
 }

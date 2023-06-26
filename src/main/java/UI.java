@@ -1,11 +1,8 @@
 package main.java;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
+import java.util.Objects;
 
 public class UI {
 
@@ -19,9 +16,66 @@ public class UI {
         this.game = game;
 
         createMainField();
+        createPlayerAttributes();
         generateScenes();
 
         window.setVisible(true);
+    }
+
+    // player ui
+    JPanel lifePanel;
+    JLabel[] lifes = new JLabel[6];
+    JPanel inventory;
+    public JLabel club, sword, shield, lantern, magic;
+
+    private void createPlayerAttributes() {
+        lifePanel = new JPanel();
+        lifePanel.setBounds(50, 0, 250, 50);
+        lifePanel.setBackground(Color.BLACK);
+        lifePanel.setLayout(new GridLayout(1, 5));
+        window.add(lifePanel);
+
+        ImageIcon lifeImage = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("heart.png")));
+        Image image = lifeImage.getImage().getScaledInstance(35, 35, Image.SCALE_DEFAULT);
+        lifeImage = new ImageIcon(image);
+
+        for (int i = 1; i < 6; i++) {
+            lifes[i] = new JLabel();
+            lifes[i].setIcon(lifeImage);
+            lifePanel.add(lifes[i]);
+        }
+
+        inventory = new JPanel();
+        inventory.setBounds(450, 0, 300, 50);
+        inventory.setBackground(Color.BLACK);
+        inventory.setLayout(new GridLayout(1, 5));
+        window.add(inventory);
+
+        // items
+        club = new JLabel();
+        ImageIcon clubIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("club.png")));
+        club.setIcon(clubIcon);
+        inventory.add(club);
+
+        sword = new JLabel();
+        ImageIcon swordIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("sword.png")));
+        sword.setIcon(swordIcon);
+        inventory.add(sword);
+
+        shield = new JLabel();
+        ImageIcon shieldIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("shield.png")));
+        shield.setIcon(shieldIcon);
+        inventory.add(shield);
+
+        lantern = new JLabel();
+        ImageIcon lanternIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("lantern.png")));
+        lantern.setIcon(lanternIcon);
+        inventory.add(lantern);
+
+        magic = new JLabel();
+        ImageIcon magicIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource("magic.png")));
+        magic.setIcon(magicIcon);
+        inventory.add(magic);
     }
 
     public void createMainField() {
@@ -57,6 +111,12 @@ public class UI {
                 new String[]{"Explore"},
                 new String[]{"exploreLog"}
         );
+        SceneBuilder.createObject(
+                game, 1, bgPanel,
+                600, 30, 50, 50, "apple.png",
+                new String[]{"Explore"},
+                new String[]{"exploreApple"}
+        );
         SceneBuilder.createArrowButton(
                 game, bgPanel,
                 1, 650, 150,
@@ -73,14 +133,14 @@ public class UI {
         SceneBuilder.createObject(
                 game, 2, bgPanel,
                 400, 200, 90, 150, "kneel.png",
-                new String[]{"Talk"},
-                new String[]{"talkKneelingKnight"}
+                new String[]{"Talk", "Ask for help"},
+                new String[]{"talkKneelingKnight", "askHelp"}
         );
         SceneBuilder.createObject(
                 game, 2, bgPanel,
                 320, 220, 40, 40, "",
-                new String[]{"Explore"},
-                new String[]{"exploreCave"}
+                new String[]{"Explore", "Enter"},
+                new String[]{"exploreCave", "enterCave"}
         );
         SceneBuilder.createArrowButton(
                 game, bgPanel,

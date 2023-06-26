@@ -25,4 +25,8 @@ public class SceneSwitcher {
         game.ui.narrator.setText("You found yourself in front of a dark and cold cave. Your path leads through. " +
                 "The adventure begins. There is a knight sobbing out loud...");
     }
+
+    public void showScene03() {
+        game.ui.narrator.append("...and action");
+    }
 }

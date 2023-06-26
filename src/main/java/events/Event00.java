@@ -4,7 +4,7 @@ import main.java.Game;
 
 public class Event00 {
 
-    Game game;
+    private final Game game;
 
     public Event00(Game game) {
         this.game = game;
@@ -15,7 +15,20 @@ public class Event00 {
     }
 
     public void fightKnight() {
-        game.ui.narrator.setText("This is not the right time for a training, young man. By the order of the king, we need to continue on our mission.");
+        if (game.player.currentLife == 1) {
+            game.ui.narrator.setText("Guard: \"What a waste of a warrior.\"");
+            game.player.currentLife--;
+        }
+        if (game.player.hasClub) {
+            game.ui.narrator.setText("Guard: \"Nice stick, boy. Now be gone or I stick it up your arse!\"");
+        } else {
+            game.ui.narrator.setText("Guard: \"Let this be your first lesson, boy!\"\n You lost one life in an indiscreet skirmish. Bring yourself some weapon, next time.");
+            game.player.currentLife--;
+        }
+        if (game.player.hasSword) {
+            game.ui.narrator.setText("I surrender, you gained strength since I have seen you last time. Good job, my lord!");
+        }
+        game.player.updateStats();
     }
 
     public void robKnight() {
@@ -23,6 +36,24 @@ public class Event00 {
     }
 
     public void exploreLog() {
-        game.ui.narrator.setText("You got yourself a club. Better than nothing. Now, hurry up, be on your way!");
+        if (!game.player.hasClub) {
+            game.ui.narrator.setText("You got yourself a club. Better than nothing. Now, hurry up, be on your way!");
+            game.player.hasClub = true;
+            game.player.updateStats();
+        } else {
+            game.ui.narrator.setText("There is nothing more here!");
+        }
+    }
+
+    public void exploreApple() {
+        if (game.player.currentLife != game.player.maxLife) {
+            game.ui.narrator.setText("An apple a day keeps doctor away. You just gained an extra life!");
+            game.player.currentLife++;
+            game.player.updateStats();
+
+            game.ui.bgPanel[1].getComponent(2).setVisible(false);
+        } else {
+            game.ui.narrator.setText("Your strength is at max level, lord.");
+        }
     }
 }
