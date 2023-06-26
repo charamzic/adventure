@@ -84,4 +84,30 @@ public class SceneBuilder {
         }
         return popMenu;
     }
+
+    public static void createArrowButton(
+            Game game, JPanel[] bgPanel,
+            int sceneId, int posX, int posY,
+            String fileName, String command, String tooltip
+    ) {
+        ImageIcon arrowIcon = new ImageIcon(Objects.requireNonNull(SceneBuilder.class.getClassLoader().getResource(fileName)));
+
+        JButton arrowBtn = new JButton();
+
+        arrowBtn.setBounds(posX, posY, 50, 50);
+        arrowBtn.setOpaque(false);
+        arrowBtn.setContentAreaFilled(false);
+        arrowBtn.setBorderPainted(false);
+        arrowBtn.setFocusPainted(false);
+
+        arrowBtn.setIcon(arrowIcon);
+        arrowBtn.addActionListener(game.actionHandler);
+        arrowBtn.setActionCommand(command);
+
+        ToolTipManager.sharedInstance().setInitialDelay(0);
+        ToolTipManager.sharedInstance().setReshowDelay(0);
+        arrowBtn.setToolTipText(tooltip);
+
+        bgPanel[sceneId].add(arrowBtn);
+    }
 }

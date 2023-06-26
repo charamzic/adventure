@@ -1,8 +1,11 @@
 package main.java;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.Objects;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import java.awt.Font;
 
 public class UI {
 
@@ -16,7 +19,7 @@ public class UI {
         this.game = game;
 
         createMainField();
-        generateScene();
+        generateScenes();
 
         window.setVisible(true);
     }
@@ -39,7 +42,7 @@ public class UI {
         window.add(narrator);
     }
 
-    public void generateScene() {
+    public void generateScenes() {
         // SCENE 00
         SceneBuilder.createBackground(window, bgPanel, bgLabel, 1, "paloucek.png");
         SceneBuilder.createObject(
@@ -54,8 +57,16 @@ public class UI {
                 new String[]{"Explore"},
                 new String[]{"exploreLog"}
         );
-        createArrowButton(1, 650, 150, "vpravo.png", "goScene2", "K jeskyni");
-        createArrowButton(1, 0, 150, "vlevo.png", "goScene1", "Utéct domů");
+        SceneBuilder.createArrowButton(
+                game, bgPanel,
+                1, 650, 150,
+                "vpravo.png", "goScene2", "K jeskyni"
+        );
+        SceneBuilder.createArrowButton(
+                game, bgPanel,
+                1, 0, 150,
+                "vlevo.png", "goScene1", "Utéct domů"
+        );
 
         // SCENE 02
         SceneBuilder.createBackground(window, bgPanel, bgLabel, 2, "jeskyne.png");
@@ -71,34 +82,13 @@ public class UI {
                 new String[]{"Explore"},
                 new String[]{"exploreCave"}
         );
-        createArrowButton(2, 0, 150, "vlevo.png", "goScene0", "Zpět na začátek");
+        SceneBuilder.createArrowButton(
+                game, bgPanel,
+                2, 0, 150,
+                "vlevo.png", "goScene0", "Zpět na začátek"
+        );
 
         bgPanel[1].add(bgLabel[1]);
         bgPanel[2].add(bgLabel[2]);
-    }
-
-    private void createArrowButton(
-            int bgNum, int posX, int posY,
-            String fileName, String command, String tooltip
-    ) {
-        ImageIcon arrowIcon = new ImageIcon(Objects.requireNonNull(getClass().getClassLoader().getResource(fileName)));
-
-        JButton arrowBtn = new JButton();
-
-        arrowBtn.setBounds(posX, posY, 50, 50);
-        arrowBtn.setOpaque(false);
-        arrowBtn.setContentAreaFilled(false);
-        arrowBtn.setBorderPainted(false);
-        arrowBtn.setFocusPainted(false);
-
-        arrowBtn.setIcon(arrowIcon);
-        arrowBtn.addActionListener(game.actionHandler);
-        arrowBtn.setActionCommand(command);
-
-        ToolTipManager.sharedInstance().setInitialDelay(0);
-        ToolTipManager.sharedInstance().setReshowDelay(0);
-        arrowBtn.setToolTipText(tooltip);
-
-        bgPanel[bgNum].add(arrowBtn);
     }
 }
